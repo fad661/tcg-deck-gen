@@ -49,14 +49,27 @@ const Canvas: FC<{
     }
 
   }, [cards]);
+
+  const handleClick = () => {
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    const imageDataURL = canvas.toDataURL('image/jpeg', .6);
+
+    const now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15);
+
+    const link = document.createElement('a');
+    link.download = `deck_${now}.jpg`;
+    link.href = imageDataURL;
+    link.click();
+  }
   
   return (
-    <div style={ { transform: 'scale(0.2)', transformOrigin: 'top left'}} >
-      <canvas id="canvas" width={width} height={height}></canvas>
+    <div style={{ position: 'relative'}}>
+      <div style={{ transform: 'scale(0.2)', transformOrigin: 'top left' }} >
+        <canvas id="canvas" width={width} height={height}></canvas>
+      </div>
+      <button style={{ position: 'absolute', top: 10, left: 10}} onClick={() => handleClick()}>Download</button>
     </div>
   );
 }
-
-// 指定したURLから画像を読み込み
 
 export default Canvas
